@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 169384184}
   - component: {fileID: 169384185}
+  - component: {fileID: 169384186}
   m_Layer: 0
   m_Name: WaterManager
   m_TagString: Untagged
@@ -169,6 +170,27 @@ MonoBehaviour:
   waveOffsetSpeed: 1.06
   waveHeight: 0.16
   waterMeshFilter: {fileID: 108174694641880404}
+--- !u!114 &169384186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169384183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2824eda16cf3c34f92ac047b3bf6a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterObject: {fileID: 8996880272903370594}
+  objectPrefab: {fileID: 8816889875483111277, guid: 2b9d52ba341f12549bbad904668b74fc,
+    type: 3}
+  amountOfFish: 1000
+  spawnBounds: {x: 470, y: 47, z: 470}
+  spawnHeight: 0
+  swimChangeFrequency: 0
+  swimSpeed: 30
+  turnSpeed: 4.6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

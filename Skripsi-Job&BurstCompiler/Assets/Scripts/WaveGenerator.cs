@@ -18,7 +18,7 @@ public class WaveGenerator : MonoBehaviour
     [Header("References and Prefabs")]
     public MeshFilter waterMeshFilter;
     private Mesh waterMesh;
-
+    
     //Private Mesh Job Properties
     NativeArray<Vector3> waterVertices;
     NativeArray<Vector3> waterNormals;

@@ -7,6 +7,8 @@ using Unity.Burst;
 using Unity.Jobs;
 using System.Threading.Tasks;
 using Unity.Mathematics;
+using UnityEngine.UI;
+using TMPro;
 
 public class WaveGenerator : MonoBehaviour
 {
@@ -27,6 +29,14 @@ public class WaveGenerator : MonoBehaviour
     UpdateMeshJob meshModificationJob;
     JobHandle meshModificationJobHandle;
 
+    [Header("Parameter Modifiers UI")]
+    public Slider waveScaleSlider;
+    public Slider waveOffsetSpeedSlider;
+    public Slider waveHeightSlider;
+    public TextMeshProUGUI waveScaleTMP;
+    public TextMeshProUGUI waveOffsetSpeedTMP;
+    public TextMeshProUGUI waveHeightTMP;
+
     private void Start()
     {
         InitialiseData();
@@ -35,6 +45,10 @@ public class WaveGenerator : MonoBehaviour
     //This is where the appropriate mesh verticies are loaded in
     private void InitialiseData()
     {
+        waveScaleTMP.text = waveScale.ToString();
+        waveOffsetSpeedTMP.text = waveOffsetSpeed.ToString();
+        waveHeightTMP.text = waveHeight.ToString();
+
         waterMesh = waterMeshFilter.mesh;
 
         //This allows Unity to make background modifications so that it can update the mesh quicker
@@ -118,4 +132,24 @@ public class WaveGenerator : MonoBehaviour
             return noise.snoise(pos);
         }
     }
+
+    #region
+    public void AdjustWaveScale()
+    {
+        waveScale = waveScaleSlider.value;
+        waveScaleTMP.text = waveScale.ToString();
+    }
+
+    public void AdjustWaveOffsetSpeed()
+    {
+        waveOffsetSpeed = waveOffsetSpeedSlider.value;
+        waveOffsetSpeedTMP.text = waveOffsetSpeed.ToString();
+    }
+
+    public void AdjustWaveHeight()
+    {
+        waveHeight = waveHeightSlider.value;
+        waveHeightTMP.text = waveHeight.ToString();
+    }
+    #endregion
 }

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using UnityEngine.Jobs;
+
 
 using math = Unity.Mathematics.math;
 using random = Unity.Mathematics.Random;
@@ -32,8 +35,17 @@ public class FishGenerator : MonoBehaviour
     private NativeArray<Vector3> velocities;
     private TransformAccessArray transformAccessArray;
 
+    [Header("Fish Generator Params Modifier UI")]
+    public Slider swimSpeedSlider;
+    public Slider turnSpeedSlider;
+    public TextMeshProUGUI swimSpeedTMP;
+    public TextMeshProUGUI turnSpeedTMP;
+
     private void Start()
     {
+        swimSpeedTMP.text = swimSpeed.ToString();
+        turnSpeedTMP.text = turnSpeed.ToString();
+
         velocities = new NativeArray<Vector3>(amountOfFish, Allocator.Persistent);
         transformAccessArray = new TransformAccessArray(amountOfFish);
 
@@ -132,9 +144,22 @@ public class FishGenerator : MonoBehaviour
         }
     }
 
+
     private void OnDestroy()
     {
         transformAccessArray.Dispose();
         velocities.Dispose();
+    }
+
+    public void AdjustSwimSpeed()
+    {
+        swimSpeed = swimSpeedSlider.value;
+        swimSpeedTMP.text = swimSpeed.ToString();
+    }
+
+    public void AdjustTurnSpeed()
+    {
+        turnSpeed = turnSpeedSlider.value;
+        turnSpeedTMP.text = turnSpeed.ToString();
     }
 }

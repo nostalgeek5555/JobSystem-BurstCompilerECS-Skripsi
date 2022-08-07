@@ -603,7 +603,7 @@ namespace Tayx.Graphy
 
             m_fpsManager    .SetPosition(m_graphModulePosition);
             m_ramManager    .SetPosition(m_graphModulePosition);
-            m_audioManager  .SetPosition(m_graphModulePosition);
+            //m_audioManager  .SetPosition(m_graphModulePosition);
             m_advancedData  .SetPosition(m_advancedModulePosition);
 
             m_fpsManager    .SetState   (m_fpsModuleState);

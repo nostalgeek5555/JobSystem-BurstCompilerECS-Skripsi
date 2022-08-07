@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7224,5 +7224,6 @@ PrefabInstance:
       propertyPath: amountOfFish
       value: 3000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8071063566887968699, guid: 5ac03e8c54c948044bcb4b0b9644d2cf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ac03e8c54c948044bcb4b0b9644d2cf, type: 3}

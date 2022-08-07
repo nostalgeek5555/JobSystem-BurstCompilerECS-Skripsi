@@ -48,10 +48,17 @@ MonoBehaviour:
   waveScale: 0.24
   waveOffsetSpeed: 1.06
   waveHeight: 0.16
+  noiseFrequency: 1
+  noiseOctaves: 1
+  noiseLacunarity: 2
+  noisePersistence: 0.5
   waterMeshFilter: {fileID: 3514333771159205872}
   waveScaleSlider: {fileID: 0}
   waveOffsetSpeedSlider: {fileID: 0}
   waveHeightSlider: {fileID: 0}
+  waveScaleTMP: {fileID: 0}
+  waveOffsetSpeedTMP: {fileID: 0}
+  waveHeightTMP: {fileID: 0}
 --- !u!114 &3550309569451401822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +80,10 @@ MonoBehaviour:
   swimChangeFrequency: 0
   swimSpeed: 30
   turnSpeed: 4.6
+  swimSpeedSlider: {fileID: 0}
+  turnSpeedSlider: {fileID: 0}
+  swimSpeedTMP: {fileID: 0}
+  turnSpeedTMP: {fileID: 0}
 --- !u!1 &8918592456149417941
 GameObject:
   m_ObjectHideFlags: 0

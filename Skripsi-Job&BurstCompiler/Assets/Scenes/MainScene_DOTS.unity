@@ -1487,6 +1487,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Graphy]'
       objectReference: {fileID: 0}
+    - target: {fileID: 11480938, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_debugPackets.Array.data[0].TakeScreenshot
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11496292, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_graphyMode
       value: 1
@@ -1498,6 +1502,22 @@ PrefabInstance:
     - target: {fileID: 11496292, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_ramGraphResolution
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 22424132, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
+    - target: {fileID: 22439978, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
+    - target: {fileID: 22445198, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
+    - target: {fileID: 22450346, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
       objectReference: {fileID: 0}
     - target: {fileID: 22451668, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1583,6 +1603,18 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 22460488, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
+    - target: {fileID: 22465754, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
+    - target: {fileID: 22477518, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
     - target: {fileID: 22493042, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -514
@@ -1590,6 +1622,11 @@ PrefabInstance:
     - target: {fileID: 22493042, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -61
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010243477314, guid: 0abab5bb77339e4428787a870eb31bd3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
@@ -7199,6 +7236,31 @@ PrefabInstance:
       propertyPath: waveHeightTMP
       value: 
       objectReference: {fileID: 1015929863}
+    - target: {fileID: 3550309569451401821, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401821, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: waveOffsetSpeed
+      value: 1.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401821, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: waveHeight
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401821, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: noiseFrequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401821, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: noiseOctaves
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3550309569451401822, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
         type: 3}
       propertyPath: swimSpeedTMP
@@ -7222,7 +7284,22 @@ PrefabInstance:
     - target: {fileID: 3550309569451401822, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
         type: 3}
       propertyPath: amountOfFish
-      value: 3000
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401822, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: swimSpeed
+      value: 38.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401822, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 25.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550309569451401822, guid: 5ac03e8c54c948044bcb4b0b9644d2cf,
+        type: 3}
+      propertyPath: mode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8071063566887968699, guid: 5ac03e8c54c948044bcb4b0b9644d2cf, type: 3}

@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using Unity.Jobs;
-using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine.UI;
 using TMPro;
 
 public class WaveGenerator : MonoBehaviour
 {
+    [Header("Compiler Mode Controllers")]
+    public MODE mode;
+
+
     [Header("Wave Parameters")]
     public float waveScale;
     public float waveOffsetSpeed;
@@ -34,6 +35,10 @@ public class WaveGenerator : MonoBehaviour
     public MeshFilter waterMeshFilter;
     private Mesh waterMesh;
 
+    //Private Mesh Non-Job Properties
+    Vector3[] waterVerticesClassic;
+    Vector3[] waterNormalsClassic;
+
     //Private Mesh Job Properties
     NativeArray<int> hashVal;
     NativeArray<Vector3> gradient3D;
@@ -54,11 +59,11 @@ public class WaveGenerator : MonoBehaviour
 
     private void Start()
     {
-        InitialiseData();
+        InitializeData();
     }
 
     //This is where the appropriate mesh verticies are loaded in
-    private void InitialiseData()
+    private void InitializeData()
     {
         waveScaleTMP.text = waveScale.ToString();
         waveOffsetSpeedTMP.text = waveOffsetSpeed.ToString();
@@ -69,6 +74,122 @@ public class WaveGenerator : MonoBehaviour
         //This allows Unity to make background modifications so that it can update the mesh quicker
         waterMesh.MarkDynamic();
 
+        if (mode == MODE.USE_DOTS)
+        {
+            InitialSetupDOTS();
+        }
+
+        else
+        {
+            InitialSetupHandbuilt();
+        }
+    }
+
+    private void Update()
+    {
+        if (mode == MODE.USE_DOTS)
+        {
+            //Creating a job and assigning the variables within the Job
+            meshModificationJob = new UpdateMeshJob()
+            {
+                hashValues = hashVal,
+                gradient3DS = gradient3D,
+                vertices = waterVertices,
+                normals = waterNormals,
+                offsetSpeed = waveOffsetSpeed,
+                time = Time.time,
+                scale = waveScale,
+                height = waveHeight,
+
+                frequency = noiseFrequency,
+                octaves = noiseOctaves,
+                lacunarity = noiseLacunarity,
+                persistence = noisePersistence
+            };
+
+            //Setup of the job handle
+            meshModificationJobHandle = meshModificationJob.Schedule(waterVertices.Length, 64);
+        }
+        
+        else
+        {
+            GenerateWave();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (mode == MODE.USE_DOTS)
+        {
+            //Ensuring the completion of the job
+            meshModificationJobHandle.Complete();
+
+            //Set the vertices directly
+            waterMesh.SetVertices(meshModificationJob.vertices);
+
+            //Most expensive
+            waterMesh.RecalculateNormals();
+        }
+
+        else
+        {
+            waterMesh.vertices = waterVerticesClassic;
+            waterMesh.RecalculateNormals();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (mode == MODE.USE_DOTS)
+        {
+            // make sure to Dispose any NativeArrays when you're done
+            waterVertices.Dispose();
+            waterNormals.Dispose();
+        }
+    }
+
+    #region Handbuilt
+
+    private void InitialSetupHandbuilt()
+    {
+        waterNormalsClassic = waterMesh.normals;
+        waterVerticesClassic = waterMesh.vertices;
+
+        waterMesh.RecalculateNormals();
+        waterMesh.RecalculateBounds();
+    }
+
+    private void GenerateWave()
+    {
+        if (waterNormalsClassic.Length > 0)
+        {
+            for (int i = 0; i < waterNormalsClassic.Length; i++)
+            {
+                if (waterNormalsClassic[i].z > 0f)
+                {
+                    var vertex = waterVerticesClassic[i];
+
+
+                    float noiseValue = Noise(vertex.x * waveScale + waveOffsetSpeed * Time.time, vertex.y * waveScale + waveOffsetSpeed * Time.time, vertex.z);
+
+                    waterVerticesClassic[i] = new Vector3(vertex.x, vertex.y, noiseValue * waveHeight + 0.3f);
+                }
+            }
+        }  
+    }
+
+    private float Noise(float x, float y, float z)
+    {
+        float3 pos = math.float3(x, y, z);
+        return PerlinNoise.Sum(pos, noiseFrequency, noiseOctaves, noiseLacunarity, noisePersistence);
+    }
+
+    #endregion
+
+
+    #region USING DOTS
+    private void InitialSetupDOTS()
+    {
         //The verticies will be reused throughout the life of the program so the Allocator has to be set to Persistent
         waterVertices = new NativeArray<Vector3>(waterMesh.vertices, Allocator.Persistent);
         waterNormals = new NativeArray<Vector3>(waterMesh.normals, Allocator.Persistent);
@@ -77,57 +198,14 @@ public class WaveGenerator : MonoBehaviour
         hashVal = new NativeArray<int>(hash, Allocator.Persistent);
         gradient3D = new NativeArray<Vector3>(gradients3D, Allocator.Persistent);
     }
-
-    private void Update()
-    {
-        //Creating a job and assigning the variables within the Job
-        meshModificationJob = new UpdateMeshJob()
-        {
-            hashValues = hashVal,
-            gradient3DS = gradient3D,
-            vertices = waterVertices,
-            normals = waterNormals,
-            offsetSpeed = waveOffsetSpeed,
-            time = Time.time,
-            scale = waveScale,
-            height = waveHeight,
-
-            frequency = noiseFrequency,
-            octaves = noiseOctaves,
-            lacunarity = noiseLacunarity,
-            persistence = noisePersistence
-        };
-
-        //Setup of the job handle
-        meshModificationJobHandle = meshModificationJob.Schedule(waterVertices.Length, 64);
-    }
-
-    private void LateUpdate()
-    {
-        //Ensuring the completion of the job
-        meshModificationJobHandle.Complete();
-
-        //Set the vertices directly
-        waterMesh.SetVertices(meshModificationJob.vertices);
-
-        //Most expensive
-        waterMesh.RecalculateNormals();
-    }
-
-    private void OnDestroy()
-    {
-        // make sure to Dispose any NativeArrays when you're done
-        waterVertices.Dispose();
-        waterNormals.Dispose();
-    }
-
+    
     [BurstCompile]
     private struct UpdateMeshJob : IJobParallelFor
     {
-        [NativeDisableParallelForRestriction]
+        [NativeDisableParallelForRestriction, ReadOnly]
         public NativeArray<int> hashValues;
 
-        [NativeDisableParallelForRestriction]
+        [NativeDisableParallelForRestriction, ReadOnly]
         public NativeArray<Vector3> gradient3DS;
 
         public NativeArray<Vector3> vertices;
@@ -261,6 +339,8 @@ public class WaveGenerator : MonoBehaviour
                 tz);
         }
     }
+    #endregion
+
 
     #region Perlin Noise Properties
 
@@ -342,4 +422,11 @@ public class WaveGenerator : MonoBehaviour
         waveHeightTMP.text = waveHeight.ToString();
     }
     #endregion
+
+
+    public enum MODE
+    {
+        HANDBUILT = 0,
+        USE_DOTS = 1
+    }
 }
